@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+    defaultConfig {
+        applicationId "com.example.dima.req"
+        minSdkVersion 21
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+}
+
+kapt { generateStubs = true }
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile('io.reactivex:rxandroid:1.2.1') { exclude module: 'rxjava' }
+    compile 'io.reactivex:rxjava:1.1.9'
+    compile('io.reactivex:rxkotlin:0.60.0') {
+        exclude module: 'rxjava'
+        exclude module: 'kotlin-stdlib'
+    }
+    //region Squareup
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile("com.squareup.retrofit2:retrofit:$retrofit_version") { exclude module: 'okhttp' }
+    compile("com.squareup.retrofit2:converter-gson:$retrofit_version") {
+        exclude module: 'retrofit'
+        exclude module: 'gson'
+    }
+    compile("com.squareup.retrofit2:adapter-rxjava:$retrofit_version") {
+        exclude module: 'retrofit'
+        exclude module: 'rxjava'
+    }
+    //region Google
+    compile 'com.google.code.gson:gson:2.7'
+    compile "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    testCompile 'junit:junit:4.12'
+    compile 'io.requery:requery:1.0.0'
+    compile 'io.requery:requery-android:1.0.0'
+    apt 'io.requery:requery-processor:1.0.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.github.jponge:lzma-java:1.3'
+
+}
