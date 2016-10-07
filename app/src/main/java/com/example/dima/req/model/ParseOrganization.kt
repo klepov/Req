@@ -1,13 +1,13 @@
 package com.example.dima.req.model
 
+import com.example.dima.req.extensions.AdvancedJsonDeserializer
+import com.example.dima.req.extensions.GsonDeserializable
 import com.google.gson.JsonElement
-import io.workup.workup.extensions.AdvancedJsonDeserializer
-import io.workup.workup.extensions.GsonDeserializable
+
 
 data class ParseOrganization(
        val organizationID : Int,
        val title: String,
-       val site: String,
        val address:String,
        val latitude: Double,
        val longitude: Double,
@@ -18,7 +18,6 @@ data class ParseOrganization(
        val published: Int,
        val work_monday: String,
        val work_tuesday: String,
-       val work_wednesday: String,
        val work_thursday: String,
        val work_friday: String,
        val work_saturday: String,
@@ -40,67 +39,48 @@ data class ParseOrganization(
        val email:String,
        val video_url:String,
        val is_video_hidden:Int
-) : GsonDeserializable{
+) : GsonDeserializable {
     companion object {
+        fun deserializer() = Deserializer()
     }
-
-//    class Deserializer : AdvancedJsonDeserializer<ComfortableTime>() {
-//        override fun deserialize(json: JsonElement) = json.asJsonObject.let {
-//            val day = it["day"].asJsonObject
-//            ComfortableTime(
-//                    id = day["id"].asInt,
-//                    title = day["title"].asString,
-//                    end = it["end"].asString,
-//                    start = it["start"].asString
-//            )
-//        }
-//    }
-
+}
 
     class Deserializer : AdvancedJsonDeserializer<ParseOrganization>(){
         override fun deserialize(json: JsonElement) = json.asJsonObject.let {
             ParseOrganization(
-
-                    organizationID  = "organization_id": 409520,
-                    title = "title": "Зелёная шина",
-                    site = "site": "http://www.greentyre.ru",
-                    address = "address": "Санкт-Петербург, Таллинское ш., 163",
-                    latitude = "latitude": "59.805301",
-                    longitude = "longitude": "30.160055",
-                    type = "type": "org",
-                    openTime = "open_time": "ежедневно, 9:00-21:00",
-                    info = "info": "",
-                    updatedAt = "updated_at": 1474142573,
-                    published = "published": 1,
-                    work_monday = "work_monday": "09:00-21:00",
-                    work_tuesday = "work_tuesday": "09:00-21:00",
-                    work_wednesday = "work_wednesday": "09:00-21:00",
-                    work_thursday = "work_thursday": "09:00-21:00",
-                    work_friday = "work_friday": "09:00-21:00",
-                    work_saturday = "work_saturday": "09:00-21:00",
-                    work_sunday = "work_sunday": "09:00-21:00",
-                    work_always = "work_always": 0,
-                    highlight = "highlight": 0,
-                    promoted = "promoted": 0,
-                    pos = "pos": 409520,
-                    is_deleted = "is_deleted": 0,
-                    image = "image": "",
-                    source_name = "source_name": "yandex_maps",
-                    "source_id": "1205249151",
-                    "votes_rating": "0.0000",
-                    "votes_count": 0,
-                    "discount_title": null,
-                    "has_discount": 0,
-                    "pictures": [],
-                    "discount_body": null,
-                    "bg_color_id": null,
-                    "email": null,
-                    "video_url": null,
-                    "is_video_hidden": 0,
-                    "categories": [],
-                    "phones": [
-                    id = day["id"].asInt
+                    organizationID=it["organizationID "].asInt,
+                    title=it["title"].asString,
+                    address=it["address"].asString,
+                    latitude=it["latitude"].asDouble,
+                    longitude=it["longitude"].asDouble,
+                    type=it["type"].asString,
+                    openTime=it["openTime"].asString,
+                    info=it["info"].asString,
+                    updatedAt=it["updatedAt"].asLong,
+                    published=it["published"].asInt,
+                    work_monday=it["work_monday"].asString,
+                    work_tuesday=it["work_tuesday"].asString,
+                    work_thursday=it["work_thursday"].asString,
+                    work_friday=it["work_friday"].asString,
+                    work_saturday=it["work_saturday"].asString,
+                    work_sunday=it["work_sunday"].asString,
+                    work_always=it["work_always"].asInt,
+                    highlight=it["highlight"].asInt,
+                    promoted=it["promoted"].asInt,
+                    pos=it["pos"].asInt,
+                    is_deleted=it["is_deleted"].asInt,
+                    image=it["image"].asString,
+                    source_name=it["source_name"].asString,
+                    source_id=it["source_id"].asString,
+                    votes_rating=it["votes_rating"].asString,
+                    votes_count=it["votes_count"].asInt,
+                    discount_title=it["discount_title"].asString,
+                    has_discount=it["has_discount"].asInt,
+                    discount_body=it["discount_body"].asString,
+                    bg_color_id=it["bg_color_id"].asString,
+                    email=it["email"].asString,
+                    video_url=it["video_url"].asString,
+                    is_video_hidden=it["is_video_hidden"].asInt
             )
         }
-    }
 }
